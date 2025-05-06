@@ -5,6 +5,7 @@
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Member {
 
@@ -19,6 +20,70 @@ public class Member {
     private static ArrayList<TrainingTimes> trainingTimes;
     private static ArrayList<Competition> competitions;
 
+    Scanner scanner = new Scanner(System.in);
+
+    public void addMember(Scanner scanner) {
+
+        Member member = new Member(idNumber, dateOfBirth, membershipType, svimmingDisciplin, quotaPaid,
+                competitionSwimmer, trainingTimes, competitions);
+
+        System.out.println("Indtast medlemsnummer på nyt medlem som skal være fire cifre og må ikke starte med 0");
+        idNumber = scanner.nextInt();
+
+        System.out.println("Indtast fødlelsdag på nyt medle i form DD-MM-YYYY");
+        dateOfBirth = scanner.nextLine();
+
+        //Selecting membership type
+
+        System.out.println("vælg hvilken slags medlemskab medlemmet skal have" +
+                "\n 1. Aktivt" +
+                "\n 2. Passivt" +
+                "indtast \"1\"" + "eller" + "\"2\"");
+
+        int userInput = scanner.nextInt();
+
+        switch (userInput) {
+
+            case 1: member.setMembershipType(Membershiptype.ACTIVE);  break;
+
+            case 2: member.setMembershipType(Membershiptype.PASSIVE); break;
+
+        }
+
+        //Selecting swimming disciplin
+
+        System.out.println("vælg hvilken svømmedisciplin som medlemmet svømmer:" +
+                "1: Butterfly" +
+                "\n 2. Crawl" +
+                "\n 3. Backcrawl" +
+                "\n 4. Breaststroke" +
+                "indtast \"1\"" + "eller" + "\"2\"" + "eller" + "\"3\"" + "eller" + "\"4\"");
+
+        userInput = scanner.nextInt();
+
+        switch (userInput) {
+            case 1: member.setSvimmingDisciplin(SvimmingDisciplin.BUTTERFLY); break;
+
+            case 2: member.setSvimmingDisciplin(SvimmingDisciplin.CRAWL); break;
+
+            case 3: member.setSvimmingDisciplin(SvimmingDisciplin.BACKCRAWL); break;
+
+            case 4: member.setSvimmingDisciplin(SvimmingDisciplin.BREASTSTROKE); break;
+        }
+
+        quotaPaid = LocalDate.now();
+
+        System.out.println("Er det nye medlem konkurrencesvømmer? indtast \"J\" for Ja eller \"N\" for nej");
+
+        if (scanner.next().equalsIgnoreCase("J")) {
+            competitionSwimmer = true;
+        } else {
+            competitionSwimmer = false;
+        }
+
+
+
+    }
 
 
 
@@ -50,7 +115,7 @@ public class Member {
     public void setMembershipType(Membershiptype membershipType) {
         this.membershipType = membershipType;
     }
-    public void setSvimmingDisciplin() {
+    public void setSvimmingDisciplin(SvimmingDisciplin butterfly) {
         this.svimmingDisciplin = svimmingDisciplin;
     }
     public void setQuotaPaid() {
@@ -94,6 +159,27 @@ public class Member {
 
     public static void testObj(){
         Member mem1 = new Member(10,121299,)
+    }
+
+    @Override
+    public String toString() {
+
+        if(this.competitionSwimmer) {
+return
+             "Id nummer på medlem" + this.idNumber +
+                    "\nFødslelsdato for medlem" + this.dateOfBirth +
+                    "\n Medlemstype for medlem" + this.membershipType +
+                    "\n Svømmediscipling for medlem" + this.svimmingDisciplin +
+                    "\n Dato for kontigent betaling" + this.quotaPaid +
+                    "\n medlemmet er konkurrencesvømmer" +
+                    "\n medlemmet har følgende træningstider" + this.trainingTimes +
+                    "\n medlemmet har følgende konkurrencetider" + this.competitions;
+
+
+
+        }
+
+        return "";
     }
 
 }
