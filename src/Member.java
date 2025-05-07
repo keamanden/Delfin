@@ -59,7 +59,7 @@ public class Member {
         //Selecting swimming disciplin
 
         System.out.println("vælg hvilken svømmedisciplin som medlemmet svømmer:" +
-                "1: Butterfly" +
+                "\n1: Butterfly" +
                 "\n 2. Crawl" +
                 "\n 3. Backcrawl" +
                 "\n 4. Breaststroke" +
@@ -174,11 +174,27 @@ public class Member {
 
     //Ovverride function for competitive and non competitve svimmers
 
+    public void displayMember() {
+        System.out.println(toString());
+
+        if (competitionSwimmer && !competitions.isEmpty()) {
+            for (Competition competition : competitions) {
+                System.out.println(competition.toString());
+            }
+
+            if (!trainingTimes.isEmpty()) {
+                for (TrainingTimes trainingTime : trainingTimes) {
+                    System.out.println(trainingTime.toString());
+                }
+            }
+        }
+    }
 
     @Override
     public String toString() {
 
-        if(this.competitionSwimmer) {
+        String comp = competitionSwimmer ? "ja" : "nej";
+
             return
 
              "Id nummer på medlem" + this.idNumber +
@@ -186,27 +202,9 @@ public class Member {
                     "\nMedlemstype for medlem: " + this.membershipType +
                     "\nSvømmediscipling for medlem: " + this.svimmingDisciplin +
                     "\nDato for kontigent betaling: " + this.quotaPaid +
-                    "\nmedlemmet er konkurrencesvømmer: " +
+                    "\nmedlemmet er konkurrencesvømmer: " + comp +
                     "\nmedlemmet har følgende træningstider: " + this.trainingTimes +
                     "\nmedlemmet har følgende konkurrencetider: " + this.competitions;
-
-
-
-
-        }else{
-
-            return
-
-            "Id nummer på medlem :" + this.idNumber +
-            "\nFødslelsdato for medlem :" + this.dateOfBirth +
-            "\nMedlemstype for medlem :" + this.membershipType +
-            "\nSvømmediscipling for medlem :" + this.svimmingDisciplin +
-            "\nDato for kontigent betaling :" + this.quotaPaid +
-            "\nmedlemmet er IKKE konkurrencesvømmer :";
-
-
-
-        }
 
 
     }
