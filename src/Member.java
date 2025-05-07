@@ -19,17 +19,20 @@ public class Member {
     private SvimmingDisciplin svimmingDisciplin; //Enum from enum class
     private LocalDate quotaPaid;
     private Boolean competitionSwimmer;
+    private boolean isActive;
     private static ArrayList<TrainingTimes> trainingTimes;
     private static ArrayList<Competition> competitions;
+
 
     Scanner scanner = new Scanner(System.in);
     public static ArrayList<Member> members = new ArrayList<>();
 
 
 
+
     public void addMember(Scanner scanner) {
 
-        Member member = new Member(idNumber, dateOfBirth, membershipType, svimmingDisciplin, quotaPaid,
+        Member member = new Member(isActive, idNumber, dateOfBirth, membershipType, svimmingDisciplin, quotaPaid,
                 competitionSwimmer, trainingTimes, competitions);
 
         System.out.println("Indtast medlemsnummer på nyt medlem som skal være fire cifre og må ikke starte med 0");
@@ -96,7 +99,7 @@ public class Member {
 
 
     //Constructor for member
-    public Member(int idNumber, String dateOfBirth, Membershiptype membershipType, SvimmingDisciplin svimmingDisciplin,
+    public Member(boolean isActive, int idNumber, String dateOfBirth, Membershiptype membershipType, SvimmingDisciplin svimmingDisciplin,
                   LocalDate quotaPaid, Boolean competitionSwimmer, ArrayList<TrainingTimes> trainingTimes, ArrayList<Competition> competitions)
     {
 
@@ -108,6 +111,7 @@ public class Member {
         this.competitionSwimmer = competitionSwimmer;
         this.trainingTimes = trainingTimes;
         this.competitions = competitions;
+        this.isActive = isActive;
 
     }
 
@@ -117,9 +121,15 @@ public class Member {
 
 
     //Setters
+
     public void setIdNumber() {
         this.idNumber = idNumber;
     }
+
+    public void setQuotaPaid(LocalDate date) {
+        this.quotaPaid = date;
+    }
+
     public void setDateOfBirth() {
         this.dateOfBirth = dateOfBirth;
     }
@@ -140,6 +150,9 @@ public class Member {
     }
     public void setCompetitions(ArrayList<Competition> competitions) {
         this.competitions = competitions;
+    }
+    public void setActive(boolean active) {
+        this.isActive = active;
     }
 
     //Getters
@@ -166,6 +179,9 @@ public class Member {
     }
     public ArrayList<Competition> getCompetitions() {
         return competitions;
+    }
+    public boolean isActive() {
+        return isActive;
     }
 
 //    public static void testObj(){
