@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+
 public class Member {
 
     //Attributes for the member object.
@@ -21,6 +23,9 @@ public class Member {
     private static ArrayList<Competition> competitions;
 
     Scanner scanner = new Scanner(System.in);
+    public static ArrayList<Member> members = new ArrayList<>();
+
+
 
     public void addMember(Scanner scanner) {
 
@@ -29,6 +34,7 @@ public class Member {
 
         System.out.println("Indtast medlemsnummer på nyt medlem som skal være fire cifre og må ikke starte med 0");
         idNumber = scanner.nextInt();
+        scanner.nextLine();
 
         System.out.println("Indtast fødlelsdag på nyt medle i form DD-MM-YYYY");
         dateOfBirth = scanner.nextLine();
@@ -53,7 +59,7 @@ public class Member {
         //Selecting swimming disciplin
 
         System.out.println("vælg hvilken svømmedisciplin som medlemmet svømmer:" +
-                "1: Butterfly" +
+                "\n1: Butterfly" +
                 "\n 2. Crawl" +
                 "\n 3. Backcrawl" +
                 "\n 4. Breaststroke" +
@@ -81,6 +87,7 @@ public class Member {
             competitionSwimmer = false;
         }
 
+        members.add(member);
 
 
     }
@@ -101,6 +108,10 @@ public class Member {
         this.competitionSwimmer = competitionSwimmer;
         this.trainingTimes = trainingTimes;
         this.competitions = competitions;
+
+    }
+
+    public Member() {
 
     }
 
@@ -157,29 +168,45 @@ public class Member {
         return competitions;
     }
 
-    public static void testObj(){
-        Member mem1 = new Member(10,121299,)
+//    public static void testObj(){
+//        Member mem1 = new Member(10,121299,)
+//    }
+
+    //Ovverride function for competitive and non competitve svimmers
+
+    public void displayMember() {
+        System.out.println(toString());
+
+        if (competitionSwimmer && !competitions.isEmpty()) {
+            for (Competition competition : competitions) {
+                System.out.println(competition.toString());
+            }
+
+            if (!trainingTimes.isEmpty()) {
+                for (TrainingTimes trainingTime : trainingTimes) {
+                    System.out.println(trainingTime.toString());
+                }
+            }
+        }
     }
 
     @Override
     public String toString() {
 
-        if(this.competitionSwimmer) {
-return
+        String comp = competitionSwimmer ? "ja" : "nej";
+
+            return
+
              "Id nummer på medlem" + this.idNumber +
-                    "\nFødslelsdato for medlem" + this.dateOfBirth +
-                    "\n Medlemstype for medlem" + this.membershipType +
-                    "\n Svømmediscipling for medlem" + this.svimmingDisciplin +
-                    "\n Dato for kontigent betaling" + this.quotaPaid +
-                    "\n medlemmet er konkurrencesvømmer" +
-                    "\n medlemmet har følgende træningstider" + this.trainingTimes +
-                    "\n medlemmet har følgende konkurrencetider" + this.competitions;
+                    "\nFødslelsdato for medlem: " + this.dateOfBirth +
+                    "\nMedlemstype for medlem: " + this.membershipType +
+                    "\nSvømmediscipling for medlem: " + this.svimmingDisciplin +
+                    "\nDato for kontigent betaling: " + this.quotaPaid +
+                    "\nmedlemmet er konkurrencesvømmer: " + comp +
+                    "\nmedlemmet har følgende træningstider: " + this.trainingTimes +
+                    "\nmedlemmet har følgende konkurrencetider: " + this.competitions;
 
 
-
-        }
-
-        return "";
     }
 
 }
