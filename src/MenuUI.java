@@ -1,5 +1,10 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 public class MenuUI {
+
+    private ArrayList<Member> delayedPayment = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
     boolean running = true;
 
@@ -62,8 +67,27 @@ public class MenuUI {
     }
 
     public void checkArrears(){
+            //Iterator bruges der her så man kan kører vores arrayliste igennem og fjerne elementer sikkert.
+            Iterator<Member> iterator = Member.members.iterator();
+            LocalDate today = LocalDate.now();
 
-    }
+            while (iterator.hasNext()) {
+                Member member = iterator.next();
+
+                // Hvis kontingentdato er mere end 1 år gammel
+                if (member.getQuotaPaid().isBefore(today.minusYears(1))) {
+                    delayedPayment.add(member);     // flyt til restance-liste
+                    iterator.remove();              // fjern fra den normale medlemsliste
+                }
+            }
+
+            // Udskriv resultatet
+            System.out.println("Følgende medlemmer er i restance og er flyttet til listen 'delayedPayment':");
+            for (Member m : delayedPayment) {
+                System.out.println("ID: " + m.getIdNumber() + " - Sidst betalt: " + m.getQuotaPaid());
+            }
+        }
+
 
     public void addTrainingTimes(){
 
