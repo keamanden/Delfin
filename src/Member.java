@@ -40,7 +40,7 @@ public class Member {
 
         scanner.nextLine();
 
-        System.out.println("Indtast fødlelsdag på nyt medle i form DD-MM-YYYY");
+        System.out.println("Indtast fødselsdato på nyt medle i form DD-MM-YYYY");
         setDateOfBirth(scanner.nextLine());
 
         //Selecting membership type
