@@ -54,7 +54,7 @@ public class MenuUI {
 
     public void addMember(){
         Member member = new Member();
-        member.addMember(scanner);
+        member.addMember(member);
     }
 
     public void removeMember(){

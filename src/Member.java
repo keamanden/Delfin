@@ -24,23 +24,24 @@ public class Member {
     private static ArrayList<Competition> competitions;
 
 
-    Scanner scanner = new Scanner(System.in);
+
     public static ArrayList<Member> members = new ArrayList<>();
 
 
 
 
-    public void addMember(Scanner scanner) {
+    public void addMember(Member member) {
 
-        Member member = new Member(isActive, idNumber, dateOfBirth, membershipType, svimmingDisciplin, quotaPaid,
-                competitionSwimmer, trainingTimes, competitions);
+        Scanner scanner = new Scanner(System.in);
+
 
         System.out.println("Indtast medlemsnummer på nyt medlem som skal være fire cifre og må ikke starte med 0");
-        idNumber = scanner.nextInt();
+        setIdNumber(scanner.nextInt());
+
         scanner.nextLine();
 
         System.out.println("Indtast fødlelsdag på nyt medle i form DD-MM-YYYY");
-        dateOfBirth = scanner.nextLine();
+        setDateOfBirth(scanner.nextLine());
 
         //Selecting membership type
 
@@ -53,9 +54,9 @@ public class Member {
 
         switch (userInput) {
 
-            case 1: member.setMembershipType(Membershiptype.ACTIVE);  break;
+            case 1: setMembershipType(Membershiptype.ACTIVE);  break;
 
-            case 2: member.setMembershipType(Membershiptype.PASSIVE); break;
+            case 2: setMembershipType(Membershiptype.PASSIVE) ; break;
 
         }
 
@@ -71,23 +72,23 @@ public class Member {
         userInput = scanner.nextInt();
 
         switch (userInput) {
-            case 1: member.setSvimmingDisciplin(SvimmingDisciplin.BUTTERFLY); break;
+            case 1: setSvimmingDisciplin(SvimmingDisciplin.BUTTERFLY) ; break;
 
-            case 2: member.setSvimmingDisciplin(SvimmingDisciplin.CRAWL); break;
+            case 2: setSvimmingDisciplin(SvimmingDisciplin.CRAWL); break;
 
-            case 3: member.setSvimmingDisciplin(SvimmingDisciplin.BACKCRAWL); break;
+            case 3: setSvimmingDisciplin(SvimmingDisciplin.BACKCRAWL); break;
 
-            case 4: member.setSvimmingDisciplin(SvimmingDisciplin.BREASTSTROKE); break;
+            case 4: setSvimmingDisciplin(SvimmingDisciplin.BREASTSTROKE); break;
         }
 
-        quotaPaid = LocalDate.now();
+        setQuotaPaid(LocalDate.now());
 
         System.out.println("Er det nye medlem konkurrencesvømmer? indtast \"J\" for Ja eller \"N\" for nej");
 
         if (scanner.next().equalsIgnoreCase("J")) {
-            competitionSwimmer = true;
+            setCompetitionSwimmer(true);
         } else {
-            competitionSwimmer = false;
+            setCompetitionSwimmer(false);
         }
         scanner.nextLine();
 
@@ -123,7 +124,7 @@ public class Member {
 
     //Setters
 
-    public void setIdNumber() {
+    public void setIdNumber(int idNumber) {
         this.idNumber = idNumber;
     }
 
@@ -131,19 +132,19 @@ public class Member {
         this.quotaPaid = date;
     }
 
-    public void setDateOfBirth() {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
     public void setMembershipType(Membershiptype membershipType) {
         this.membershipType = membershipType;
     }
-    public void setSvimmingDisciplin(SvimmingDisciplin butterfly) {
+    public void setSvimmingDisciplin(SvimmingDisciplin svimmingDisciplin) {
         this.svimmingDisciplin = svimmingDisciplin;
     }
     public void setQuotaPaid() {
         this.quotaPaid = quotaPaid;
     }
-    public void setCompetitionSwimmer() {
+    public void setCompetitionSwimmer(Boolean competitionSwimmer) {
         this.competitionSwimmer = competitionSwimmer;
     }
     public void setTrainingTimes(ArrayList<TrainingTimes> trainingTimes) {
