@@ -14,7 +14,7 @@ public class Member {
     //Attributes for the member object.
 
     private int idNumber;
-    private String dateOfBirth;
+    public String dateOfBirth;
     private Membershiptype membershipType; //Enum from enum class
     private SvimmingDisciplin svimmingDisciplin; //Enum from enum class
     private LocalDate quotaPaid;

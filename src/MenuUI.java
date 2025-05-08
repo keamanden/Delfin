@@ -62,30 +62,46 @@ public class MenuUI
 
 
     public void makeQuotaPayment(ArrayList<Member> members) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Indtast ID for medlem som skal betale kontingent:");
+            int id = scanner.nextInt();
 
-
-        try {
-            LocalDate birthDate = LocalDate.parse(getDateOfBirth());
-            int age = Period.between(birthDate, LocalDate.now()).getYears();
-
-            double amountToPay;
-            if (age < 18) {
-                amountToPay = 1000;
-            } else if (age >= 60) {
-                amountToPay = 1600 * 0.75;
-            } else {
-                amountToPay = 1600;
+            Member foundMember = null;
+            for (Member member : members) {
+                if (member.getIdNumber() == id) {
+                    foundMember = member;
+                    break;
+                }
             }
 
-            System.out.println("Alder: " + age + " år");
-            System.out.println("Kontingent at betale: " + amountToPay + " kr.");
-            members.setQuotaPaid(LocalDate.now());
-            System.out.println("Betaling registreret den: " + LocalDate.now());
+            if (foundMember == null) {
+                System.out.println("Medlem med ID " + id + " blev ikke fundet.");
+                return;
+            }
 
-        } catch (DateTimeParseException e) {
-            System.out.println("Fejl: Fødselsdatoen er ikke i korrekt format (YYYY-MM-DD).");
+            try {
+                LocalDate birthDate = LocalDate.parse(foundMember.getDateOfBirth());
+                int age = Period.between(birthDate, LocalDate.now()).getYears();
+
+                double amountToPay;
+                if (age < 18) {
+                    amountToPay = 1000;
+                } else if (age >= 60) {
+                    amountToPay = 1600 * 0.75;
+                } else {
+                    amountToPay = 1600;
+                }
+
+                System.out.println("Alder: " + age + " år");
+                System.out.println("Kontingent at betale: " + amountToPay + " kr.");
+                foundMember.setQuotaPaid(LocalDate.now());
+                System.out.println("Betaling registreret den: " + LocalDate.now());
+
+            } catch (DateTimeParseException e) {
+                System.out.println("Fejl: Fødselsdatoen er ikke i korrekt format (YYYY-MM-DD).");
+            }
         }
-    }
+
 
 
 
