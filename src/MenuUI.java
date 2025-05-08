@@ -9,7 +9,7 @@ public class MenuUI {
 
     private ArrayList<Member> delayedPayment = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
-    boolean running = true;
+    static boolean running = true;
 
 
 
@@ -48,7 +48,7 @@ public class MenuUI {
             }
             default -> System.out.println("Ugyldigt valg. Prøv igen.");
         }
-        scanner.close();
+
 
     }
 

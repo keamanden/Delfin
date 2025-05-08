@@ -89,6 +89,7 @@ public class Member {
         } else {
             competitionSwimmer = false;
         }
+        scanner.nextLine();
 
         members.add(member);
 
