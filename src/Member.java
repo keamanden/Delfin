@@ -113,7 +113,7 @@ public class Member {
         this.competitionSwimmer = competitionSwimmer;
         this.trainingTimes = trainingTimes;
         this.competitions = competitions;
-        this.isActive = isActive;
+
 
     }
 
