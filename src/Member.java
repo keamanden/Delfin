@@ -153,9 +153,7 @@ public class Member {
     public void setCompetitions(ArrayList<Competition> competitions) {
         this.competitions = competitions;
     }
-    public void setActive(boolean active) {
-        this.isActive = active;
-    }
+
 
     //Getters
     public int getIdNumber() {
@@ -182,9 +180,7 @@ public class Member {
     public ArrayList<Competition> getCompetitions() {
         return competitions;
     }
-    public boolean isActive() {
-        return isActive;
-    }
+
 
 //    public static void testObj(){
 //        Member mem1 = new Member(10,121299,)

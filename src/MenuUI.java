@@ -86,14 +86,17 @@ public class MenuUI
                 int age = Period.between(birthDate, LocalDate.now()).getYears();
 
                 double amountToPay;
-                if (age < 18) {
-                    amountToPay = 1000;
-                } else if (age >= 60) {
-                    amountToPay = 1600 * 0.75;
+                if (foundMember.getMembershipType() == Membershiptype.PASSIVE ) {
+                    amountToPay = 500;
                 } else {
-                    amountToPay = 1600;
+                    if (age < 18) {
+                        amountToPay = 1000;
+                    } else if (age >= 60) {
+                        amountToPay = 1600 * 0.75;
+                    } else {
+                        amountToPay = 1600;
+                    }
                 }
-
                 System.out.println("Alder: " + age + " år");
                 System.out.println("Kontingent at betale: " + amountToPay + " kr.");
                 foundMember.setQuotaPaid(LocalDate.now());
