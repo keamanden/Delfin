@@ -14,10 +14,10 @@ public class MenuUI
 
 
     public void displayMenu() {
-        System.out.println("===== MENU =====");
-        System.out.println("1. Tilføj medlem");
-        System.out.println("2. Fjern medlem");
-        System.out.println("3. Registrer kontingentbetaling");
+        System.out.println("\uD83D\uDC2C===== MENU =====\uD83D\uDC2C");
+        System.out.println("1. Tilføj medlem\uD83C\uDFCA");
+        System.out.println("2. Fjern medlem❌");
+        System.out.println("3. Registrer kontingentbetaling\uD83D\uDCB0");
         System.out.println("4. Tjek restancer");
         System.out.println("5. Tilføj træningstider");
         System.out.println("6. Tilføj konkurrence");
