@@ -45,10 +45,9 @@ public class Member {
 
         //Selecting membership type
 
-        System.out.println("vælg hvilken slags medlemskab medlemmet skal have" +
+        System.out.println("vælg Medlemskab:" +" indtast \"1\"" + " eller " + "\"2\"" +
                 "\n 1. Aktivt" +
-                "\n 2. Passivt" +
-                " indtast \"1\"" + " eller " + "\"2\"");
+                "\n 2. Passivt");
 
         int userInput = scanner.nextInt();
 
@@ -62,12 +61,11 @@ public class Member {
 
         //Selecting swimming disciplin
 
-        System.out.println("vælg hvilken svømmedisciplin som medlemmet svømmer:" +
-                "\n1: Butterfly" +
+        System.out.println("vælg hvilken svømmedisciplin som medlemmet svømmer:" + " indtast \"1\"" + " eller " + "\"2\"" + " eller " + "\"3\"" + " eller " + "\"4\"" +
+                "\n 1. Butterfly" +
                 "\n 2. Crawl" +
                 "\n 3. Backcrawl" +
-                "\n 4. Breaststroke" +
-                "indtast \"1\"" + "eller" + "\"2\"" + "eller" + "\"3\"" + "eller" + "\"4\"");
+                "\n 4. Breaststroke" );
 
         userInput = scanner.nextInt();
 
@@ -101,7 +99,7 @@ public class Member {
 
 
     //Constructor for member
-    public Member(boolean isActive, int idNumber, String dateOfBirth, Membershiptype membershipType, SvimmingDisciplin svimmingDisciplin,
+    public Member(int idNumber, String dateOfBirth, Membershiptype membershipType, SvimmingDisciplin svimmingDisciplin,
                   LocalDate quotaPaid, Boolean competitionSwimmer, ArrayList<TrainingTimes> trainingTimes, ArrayList<Competition> competitions)
     {
 
