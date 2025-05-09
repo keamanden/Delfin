@@ -98,7 +98,7 @@ public class MenuUI
                 System.out.println("Betaling registreret den: " + LocalDate.now());
 
             } catch (DateTimeParseException e) {
-                System.out.println("Fejl: Fødselsdatoen er ikke i korrekt format (YYYY-MM-DD).");
+                System.out.println("Fejl: Fødselsdatoen er ikke i korrekt format (DD-MM-YYYY).");
             }
         }
 
