@@ -48,7 +48,7 @@ public class Member {
         System.out.println("vælg hvilken slags medlemskab medlemmet skal have" +
                 "\n 1. Aktivt" +
                 "\n 2. Passivt" +
-                "indtast \"1\"" + "eller" + "\"2\"");
+                " indtast \"1\"" + " eller " + "\"2\"");
 
         int userInput = scanner.nextInt();
 

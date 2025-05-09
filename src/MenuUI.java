@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -80,7 +81,8 @@ public class MenuUI
             }
 
             try {
-                LocalDate birthDate = LocalDate.parse(foundMember.getDateOfBirth());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                LocalDate birthDate = LocalDate.parse(foundMember.getDateOfBirth(), formatter);
                 int age = Period.between(birthDate, LocalDate.now()).getYears();
 
                 double amountToPay;
