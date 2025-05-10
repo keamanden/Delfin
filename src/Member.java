@@ -4,6 +4,8 @@
 
 
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -24,7 +26,8 @@ public class Member {
     private static ArrayList<Competition> competitions;
 
 
-
+    public static ArrayList<Member> juniorSvimmers = new ArrayList<>();
+    public static ArrayList<Member> seniorSvimmers = new ArrayList<>();
     public static ArrayList<Member> members = new ArrayList<>();
 
 
@@ -92,9 +95,41 @@ public class Member {
 
 
         members.add(member);
-
+        if(member.competitionSwimmer) {
+            addToJuniorOrSeniorArrayList(member);
+        }
 
     }
+
+
+    public void addToJuniorOrSeniorArrayList(Member member) {
+
+        addToJuniorArrayList(member);
+        addToSeniorArrayList(member);
+
+    }
+
+
+    public void addToJuniorArrayList(Member member) {
+
+        String yearFormat = "dd-MM-yyyy";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(yearFormat);
+
+        LocalDate today = LocalDate.now();
+        if(Period.between(LocalDate.parse(member.dateOfBirth, formatter), today).getYears() < 18 ) {
+            juniorSvimmers.add(member);       }
+    }
+
+    public void addToSeniorArrayList(Member member) {
+
+        String yearFormat = "dd-MM-yyyy";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(yearFormat);
+        LocalDate today = LocalDate.now();
+        if(Period.between(LocalDate.parse(member.dateOfBirth, formatter), today).getYears() >= 18 ) {
+            seniorSvimmers.add(member);
+        }
+    }
+
 
 
 

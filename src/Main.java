@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
 
+
         MenuUI menu = new MenuUI();
 
         Member member1 = new Member(2222, "02-02-2002", Membershiptype.ACTIVE, SvimmingDisciplin.BUTTERFLY,
@@ -13,7 +14,9 @@ public class Main {
         Member.members.add(member1);
 
 
-        while(MenuUI.running){
+
+        while(MenuUI.running) {
+
             menu.displayMenu();
 
 
