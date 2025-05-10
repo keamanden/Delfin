@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -86,18 +87,21 @@ public class MenuUI
                 int age = Period.between(birthDate, LocalDate.now()).getYears();
 
                 double amountToPay;
-                if (age < 18) {
-                    amountToPay = 1000;
-                } else if (age >= 60) {
-                    amountToPay = 1600 * 0.75;
+                if (foundMember.getMembershipType() == Membershiptype.PASSIVE ) {
+                    amountToPay = 500;
                 } else {
-                    amountToPay = 1600;
+                    if (age < 18) {
+                        amountToPay = 1000;
+                    } else if (age >= 60) {
+                        amountToPay = 1600 * 0.75;
+                    } else {
+                        amountToPay = 1600;
+                    }
                 }
-
                 System.out.println("Alder: " + age + " år");
                 System.out.println("Kontingent at betale: " + amountToPay + " kr.");
                 foundMember.setQuotaPaid(LocalDate.now());
-                System.out.println("Betaling registreret den: " + LocalDate.now());
+                System.out.println("Betaling registreret den: " + LocalDate.now().format(formatter));
 
             } catch (DateTimeParseException e) {
                 System.out.println("Fejl: Fødselsdatoen er ikke i korrekt format (DD-MM-YYYY).");
@@ -108,25 +112,30 @@ public class MenuUI
 
 
     public void checkArrears() {
-        //Iterator bruges der her så man kan kører vores arrayliste igennem og fjerne elementer sikkert.
-        Iterator<Member> iterator = Member.members.iterator();
-        LocalDate today = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-        while (iterator.hasNext()) {
-            Member member = iterator.next();
+            Iterator<Member> iterator = Member.members.iterator();
+            LocalDate today = LocalDate.now();
 
-            // Hvis kontingentdato er mere end 1 år gammel
-            if (member.getQuotaPaid().isBefore(today.minusYears(1))) {
-                delayedPayment.add(member);     // flyt til restance-liste
-                iterator.remove();              // fjern fra den normale medlemsliste
+            while (iterator.hasNext()) {
+                Member member = iterator.next();
+
+                if (member.getQuotaPaid().isBefore(today.minusYears(1))) {
+                    delayedPayment.add(member);
+                    iterator.remove();
+                }
             }
-        }
 
-        // Udskriv resultatet
-        System.out.println("Følgende medlemmer er i restance og er flyttet til listen 'delayedPayment':");
-        for (Member m : delayedPayment) {
-            System.out.println("ID: " + m.getIdNumber() + " - Sidst betalt: " + m.getQuotaPaid());
-        }
+            if (delayedPayment.isEmpty()) {
+                System.out.println("Ingen medlemmer i restance.");
+            } else {
+                System.out.println("Følgende medlemmer er i restance og er flyttet til listen 'delayedPayment':");
+                for (Member m : delayedPayment) {
+                    String formattedDate = m.getQuotaPaid().format(formatter);
+                    System.out.println("ID: " + m.getIdNumber() + " - Sidst betalt: " + formattedDate);
+                }
+            }
+
     }
 
 
