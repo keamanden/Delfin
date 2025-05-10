@@ -8,7 +8,7 @@ public class Main {
 
         MenuUI menu = new MenuUI();
 
-        Member member1 = new Member(true, 2222, "02-02-2002", Membershiptype.ACTIVE, SvimmingDisciplin.BUTTERFLY,
+        Member member1 = new Member(2222, "02-02-2002", Membershiptype.ACTIVE, SvimmingDisciplin.BUTTERFLY,
                 LocalDate.parse("2020-03-03"), true, new ArrayList<TrainingTimes>(),  new ArrayList<Competition>());
         Member.members.add(member1);
 
