@@ -90,6 +90,7 @@ public class Member {
         }
         scanner.nextLine();
 
+
         members.add(member);
 
 
