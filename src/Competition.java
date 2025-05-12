@@ -188,6 +188,8 @@ public class Competition {
         System.out.println("Deltagere i konkurrencen " + competitionName + ":");
         for (Member m : participants) {
             System.out.println("ID: " + m.getIdNumber() + " - Dato: " + m.getDateOfBirth());
+            System.out.println("Swimming disciplin: " + getSvimmingDisciplin() +
+                    " - " + " Adresse: " + getCompetitionAddress());
         }
     }
 
