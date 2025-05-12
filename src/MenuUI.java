@@ -144,7 +144,7 @@ public class MenuUI {
 
 
     public void addTrainingTimes() {
-
+     TrainingTimes.createTrainingTime();
     }
 
     public void addCompetition() {
