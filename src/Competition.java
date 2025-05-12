@@ -161,7 +161,7 @@ public class Competition {
         }
 
         int memIndex = scanner.nextInt() - 1;
-        scanner.nextLine(); // 🧼 Ryd new line efter nextInt()
+        scanner.nextLine();
 
         if (memIndex < 0 || memIndex >= Member.members.size()) {
             System.out.println("Ugyldigt valg.");
