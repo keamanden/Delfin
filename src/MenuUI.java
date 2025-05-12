@@ -6,8 +6,8 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
-public class MenuUI
-{
+
+public class MenuUI {
 
     private ArrayList<Member> delayedPayment = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
@@ -22,9 +22,11 @@ public class MenuUI
         System.out.println("4. Tjek restancer");
         System.out.println("5. Tilføj træningstider");
         System.out.println("6. Tilføj konkurrence");
-        System.out.println("7. Vis top 5 svømmere");
-        System.out.println("8. Opdater medlemsstatus");
-        System.out.println("9. Afslut");
+        System.out.println("7. Tilføj medlemmer til konkurrence");
+        System.out.println("8. Se deltager i konkurrencer");
+        System.out.println("9. Vis top 5 svømmere");
+        System.out.println("10. Opdater medlemsstatus");
+        System.out.println("11. Afslut");
         System.out.print("Vælg et nummer: ");
 
         int choice;
@@ -41,9 +43,11 @@ public class MenuUI
             case 4 -> checkArrears();
             case 5 -> addTrainingTimes();
             case 6 -> addCompetition();
-            case 7 -> displayTop5Svimmers();
-            case 8 -> setMemberStatus(Member.members);
-            case 9 -> {
+            case 7 -> assignToCompetition();
+            case 8 -> showParticipantsInCompetition();
+            case 9 -> displayTop5Svimmers();
+            case 10 -> setMemberStatus(Member.members);
+            case 11 -> {
                 System.out.println("Afslutter programmet...");
                 running = false;
             }
@@ -144,12 +148,71 @@ public class MenuUI
     }
 
     public void addCompetition() {
+        Competition.createCompetition();
 
     }
+
+
+
+    public void assignToCompetition() {
+        // Skaber en scanner til input
+        Scanner scanner = new Scanner(System.in);
+
+        // Kalder på den metode, der tildeler et medlem til en konkurrence
+        Competition.assignMemberToCompetition();  // Dette kalder den metode, du har defineret tidligere
+
+        // Kan tilføje besked her, hvis nødvendigt
+        System.out.println("Medlemmet blev tilmeldt konkurrencen.");
+    }
+
+
+
+
+    public void showParticipantsInCompetition() {
+        if (Competition.competitions.isEmpty()) {
+            System.out.println("Ingen konkurrencer oprettet.");
+            return;
+        }
+
+        System.out.println("Vælg en konkurrence for at se deltagerne:");
+        for (int i = 0; i < Competition.competitions.size(); i++) {
+            System.out.println((i + 1) + ". " + Competition.competitions.get(i).getCompetitionName());
+        }
+
+        scanner.nextLine();
+        String input = scanner.nextLine();
+
+        if (input.isEmpty()) {
+            System.out.println("Du indtastede ikke noget. Prøv igen.");
+            return;
+        }
+
+        int choice;
+        try {
+            choice = Integer.parseInt(input) - 1;
+        } catch (NumberFormatException e) {
+            System.out.println("Ugyldigt input. Du skal indtaste et tal.");
+            return;
+        }
+
+        if (choice < 0 || choice >= Competition.competitions.size()) {
+            System.out.println("Ugyldigt valg.");
+            return;
+        }
+
+        Competition.competitions.get(choice).printParticipants();
+    }
+
+
+
+
 
     public void displayTop5Svimmers() {
 
     }
+
+
+
 
     public void setMemberStatus(ArrayList<Member> members) {
 
