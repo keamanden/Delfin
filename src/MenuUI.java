@@ -208,7 +208,78 @@ public class MenuUI {
 
 
     public void displayTop5Svimmers() {
+        Scanner scanner = new Scanner(System.in);
 
+        // Trin 1: Spørg om medlems-ID
+        System.out.print("Indtast dit medlems-ID: ");
+        int id = scanner.nextInt();
+
+        Member medlem = null;
+        for (Member m : Member.members) {
+            if (m.getIdNumber() == id) {
+                medlem = m;
+                break;
+            }
+        }
+
+        if (medlem == null) {
+            System.out.println("Medlem med ID " + id + " blev ikke fundet.");
+            return;
+        }
+
+        // Trin 2: Vælg disciplin
+        System.out.println("Vælg svømmedisciplin for at se top 5 tider:");
+        System.out.println("1. Butterfly\n2. Crawl\n3. Backcrawl\n4. Breaststroke");
+        int valg = scanner.nextInt();
+
+        SvimmingDisciplin valgtDisciplin = switch (valg) {
+            case 1 -> SvimmingDisciplin.BUTTERFLY;
+            case 2 -> SvimmingDisciplin.CRAWL;
+            case 3 -> SvimmingDisciplin.BACKCRAWL;
+            case 4 -> SvimmingDisciplin.BREASTSTROKE;
+            default -> {
+                System.out.println("Ugyldigt valg. Vælger Crawl som standard.");
+                yield SvimmingDisciplin.CRAWL;
+            }
+        };
+
+        // Intern klasse til resultat
+        class Resultat {
+            Member m;
+            int tid;
+
+            Resultat(Member m, int tid) {
+                this.m = m;
+                this.tid = tid;
+            }
+        }
+
+        ArrayList<Resultat> resultater = new ArrayList<>();
+
+        // Trin 3: Find og sorter alle tider i den valgte disciplin
+        for (Member m : Member.members) {
+            if (m.getCompetitionSwimmer() && m.getTrainingTimes() != null) {
+                for (TrainingTimes t : m.getTrainingTimes()) {
+                    if (t.getSvimmingDisciplin() == valgtDisciplin) {
+                        resultater.add(new Resultat(m, t.getSvimTime()));
+                    }
+                }
+            }
+        }
+
+        resultater.sort((a, b) -> Integer.compare(a.tid, b.tid));
+
+        // Trin 4: Vis top 5
+        System.out.println("\nTop 5 tider i " + valgtDisciplin + ":");
+        for (int i = 0; i < Math.min(5, resultater.size()); i++) {
+            Resultat r = resultater.get(i);
+            System.out.println((i + 1) + ". Medlems-ID: " + r.m.getIdNumber() +
+                    " | Tid: " + r.tid + " sekunder");
+        }
+
+        if (resultater.isEmpty()) {
+            System.out.println("Ingen træningstider fundet i denne disciplin.");
+        }
     }
 
 

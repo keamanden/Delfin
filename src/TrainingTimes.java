@@ -34,24 +34,45 @@ public class TrainingTimes {
     // Statisk metode til at oprette et nyt træningsresultat
     public static TrainingTimes createTrainingTime() {
         Scanner scanner = new Scanner(System.in);
+        System.out.print("Indtast medlems-ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // rydder newline
 
-        System.out.println("Vælg svømmedisciplin:");
-        System.out.println("1. Butterfly\n2. Crawl\n3. Backcrawl\n4. Breaststroke");
-        int disciplinValg = scanner.nextInt();
-        SvimmingDisciplin disciplin = switch (disciplinValg) {
-            case 1 -> SvimmingDisciplin.BUTTERFLY;
-            case 2 -> SvimmingDisciplin.CRAWL;
-            case 3 -> SvimmingDisciplin.BACKCRAWL;
-            case 4 -> SvimmingDisciplin.BREASTSTROKE;
-            default -> {
-                System.out.println("Ugyldigt valg. Standardvælger Crawl.");
-                yield SvimmingDisciplin.CRAWL;
+        Member foundMember = null;
+        for (Member m : Member.members) {
+            if (m.getIdNumber() == id) {
+                foundMember = m;
+                break;
             }
-        };
+        }
 
+        if (foundMember == null) {
+            System.out.println("Ingen medlem med ID " + id + " blev fundet.");
+            return createTrainingTime();
+        }
+        SvimmingDisciplin disciplin = foundMember.getSvimmingDisciplin();
+        String fødselsdato = foundMember.getDateOfBirth();
+
+        System.out.println("Fundet medlem:");
+        System.out.println("Navn/ID: " + id);
+        System.out.println("Disciplin: " + disciplin);
+        System.out.println("Fødselsdato: " + fødselsdato);
+
+        // 3. Indtast tid
         System.out.print("Indtast svømmetid i sekunder: ");
         int swimTime = scanner.nextInt();
 
-        return new TrainingTimes(disciplin, swimTime);
+        // 4. Opret og tilføj træningstid
+        TrainingTimes nyTid = new TrainingTimes(disciplin, swimTime);
+
+        if (foundMember.getTrainingTimes() == null) {
+            foundMember.setTrainingTimes(new ArrayList<>());
+        }
+
+        foundMember.getTrainingTimes().add(nyTid);
+
+        System.out.println("Tid tilføjet: " + disciplin + " - " + swimTime + " sekunder");
+
+        return nyTid;
     }
 }
