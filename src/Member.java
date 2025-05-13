@@ -22,8 +22,8 @@ public class Member {
     private LocalDate quotaPaid;
     private Boolean competitionSwimmer;
     private boolean isActive;
-    private static ArrayList<TrainingTimes> trainingTimes;
-    private static ArrayList<Competition> competitions;
+    private static ArrayList<TrainingTimes> trainingTimes = new ArrayList<>();
+    private static ArrayList<Competition> competitions = new ArrayList<>();
 
 
     public static ArrayList<Member> juniorSvimmers = new ArrayList<>();
@@ -94,9 +94,9 @@ public class Member {
         scanner.nextLine();
 
 
-        members.add(member);
-        if(member.competitionSwimmer) {
-            addToJuniorOrSeniorArrayList(member);
+        members.add(this);
+        if(this.competitionSwimmer) {
+            addToJuniorOrSeniorArrayList(this);
         }
 
     }

@@ -2,10 +2,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
 
+        List<Member> loadedMembers = FileHandler.readFromFile();
+        Member.members.clear();
+        Member.members.addAll(loadedMembers);
 
         MenuUI menu = new MenuUI();
 
@@ -25,6 +29,7 @@ public class Main {
 
         }
 
+        FileHandler.writeToFile(Member.members);
 
         }
     }
