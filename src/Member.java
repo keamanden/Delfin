@@ -109,7 +109,7 @@ public class Member {
 
     }
 
-
+    //Method that calculates the amount of years between d.o.b and current day and adds member to appropriate list
     public void addToJuniorArrayList(Member member) {
 
         String yearFormat = "dd-MM-yyyy";
