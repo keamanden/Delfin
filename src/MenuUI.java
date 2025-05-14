@@ -159,7 +159,7 @@ public class MenuUI {
         Scanner scanner = new Scanner(System.in);
 
         // Kalder på den metode, der tildeler et medlem til en konkurrence
-        Competition.assignMemberToCompetition();  // Dette kalder den metode, du har defineret tidligere
+        Competition.showParticipants();  // Dette kalder den metode, du har defineret tidligere
 
         // Kan tilføje besked her, hvis nødvendigt
         System.out.println("Medlemmet blev tilmeldt konkurrencen.");

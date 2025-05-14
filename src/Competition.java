@@ -9,6 +9,7 @@ public class Competition {
     SvimmingDisciplin svimmingDisciplin;
 
     public static ArrayList<Competition> competitions = new ArrayList<>();
+
     public ArrayList<Member> participants = new ArrayList<>();
 
 
@@ -121,13 +122,13 @@ public class Competition {
             member.getCompetitions().add(this);
             System.out.println("Medlem tilføjet til konkurrence.");
         } else {
-            System.out.println("Medlem er allerede tilmeldt denne konkurrence.");
+            System.out.println("");
         }
 
     }
 
 
-    public static void assignMemberToCompetition() {
+    public static void showParticipants() {
         Scanner scanner = new Scanner(System.in);
 
         if (competitions.isEmpty()) {

@@ -33,6 +33,8 @@ public class Member {
 
 
 
+
+
     public void addMember(Member member) {
 
         Scanner scanner = new Scanner(System.in);
