@@ -6,6 +6,9 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.*;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 public class MenuUI {
 
@@ -144,7 +147,7 @@ public class MenuUI {
 
 
     public void addTrainingTimes() {
-     TrainingTimes.createTrainingTime();
+     TrainingTimes.addTrainingTime();
     }
 
     public void addCompetition() {
@@ -207,80 +210,66 @@ public class MenuUI {
 
 
 
-    public void displayTop5Svimmers() {
+    public static void displayTop5Svimmers() {
         Scanner scanner = new Scanner(System.in);
 
-        // Trin 1: Spørg om medlems-ID
-        System.out.print("Indtast dit medlems-ID: ");
-        int id = scanner.nextInt();
-
-        Member medlem = null;
-        for (Member m : Member.members) {
-            if (m.getIdNumber() == id) {
-                medlem = m;
-                break;
-            }
-        }
-
-        if (medlem == null) {
-            System.out.println("Medlem med ID " + id + " blev ikke fundet.");
-            return;
-        }
-
-        // Trin 2: Vælg disciplin
-        System.out.println("Vælg svømmedisciplin for at se top 5 tider:");
+        System.out.println("Vælg svømmedisciplin:");
         System.out.println("1. Butterfly\n2. Crawl\n3. Backcrawl\n4. Breaststroke");
         int valg = scanner.nextInt();
-
         SvimmingDisciplin valgtDisciplin = switch (valg) {
             case 1 -> SvimmingDisciplin.BUTTERFLY;
             case 2 -> SvimmingDisciplin.CRAWL;
             case 3 -> SvimmingDisciplin.BACKCRAWL;
             case 4 -> SvimmingDisciplin.BREASTSTROKE;
             default -> {
-                System.out.println("Ugyldigt valg. Vælger Crawl som standard.");
+                System.out.println("Ugyldigt valg. ");
                 yield SvimmingDisciplin.CRAWL;
             }
         };
 
-        // Intern klasse til resultat
-        class Resultat {
-            Member m;
-            int tid;
+        // Saml alle relevante tider
+        List<TrainingRecord> alleTider = new ArrayList<>();
 
-            Resultat(Member m, int tid) {
-                this.m = m;
-                this.tid = tid;
-            }
-        }
-
-        ArrayList<Resultat> resultater = new ArrayList<>();
-
-        // Trin 3: Find og sorter alle tider i den valgte disciplin
         for (Member m : Member.members) {
-            if (m.getCompetitionSwimmer() && m.getTrainingTimes() != null) {
+            if (m.getTrainingTimes() != null) {
                 for (TrainingTimes t : m.getTrainingTimes()) {
-                    if (t.getSvimmingDisciplin() == valgtDisciplin) {
-                        resultater.add(new Resultat(m, t.getSvimTime()));
-                    }
+                    alleTider.add(new TrainingRecord(m.getIdNumber(), t.getSvimTime(), t.getSvimmingDisciplin()));
                 }
             }
         }
 
-        resultater.sort((a, b) -> Integer.compare(a.tid, b.tid));
+        // Filtrer og sorter tider KUN for den valgte disciplin
+        List<TrainingRecord> filtreretTider = alleTider.stream()
+                .filter(r -> r.disciplin == valgtDisciplin)
+                .sorted(Comparator.comparingInt(r -> r.time))
+                .collect(Collectors.toList());
 
-        // Trin 4: Vis top 5
-        System.out.println("\nTop 5 tider i " + valgtDisciplin + ":");
-        for (int i = 0; i < Math.min(5, resultater.size()); i++) {
-            Resultat r = resultater.get(i);
-            System.out.println((i + 1) + ". Medlems-ID: " + r.m.getIdNumber() +
-                    " | Tid: " + r.tid + " sekunder");
+        // Udskriv top 5
+        System.out.println("\n--- Top 5 svømmere i disciplinen: " + valgtDisciplin + " ---");
+        for (int i = 0; i < Math.min(5, filtreretTider.size()); i++) {
+            TrainingRecord r = filtreretTider.get(i);
+            System.out.println((i + 1) + ". ID: " + r.memberId + " - Tid: " + r.time + " sek.");
         }
 
-        if (resultater.isEmpty()) {
-            System.out.println("Ingen træningstider fundet i denne disciplin.");
+        if (filtreretTider.isEmpty()) {
+            System.out.println("Ingen tider fundet for denne disciplin.");
         }
     }
+
+    // Hjælpeklasse til at holde ID + tid + disciplin sammen
+    static class TrainingRecord {
+        int memberId;
+        int time;
+        SvimmingDisciplin disciplin;
+
+        public TrainingRecord(int memberId, int time, SvimmingDisciplin disciplin) {
+            this.memberId = memberId;
+            this.time = time;
+            this.disciplin = disciplin;
+        }
+    }
+
+
 
 
 
