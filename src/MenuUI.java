@@ -147,8 +147,35 @@ public class MenuUI {
 
 
     public void addTrainingTimes() {
-     TrainingTimes.addTrainingTime();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Indtast medlems-ID: ");
+        int memberId = scanner.nextInt();
+
+        Member targetMember = null;
+        for (Member m : Member.members) {
+            if (m.getIdNumber() == memberId) {
+                targetMember = m;
+                break;
+            }
+        }
+
+        if (targetMember == null) {
+            System.out.println("Medlem ikke fundet.");
+            return;
+        }
+
+        SvimmingDisciplin disciplin = targetMember.getDisciplin();
+
+        System.out.print("Indtast tid (i sekunder): ");
+        double time = scanner.nextDouble();
+
+        TrainingTimes newTime = new TrainingTimes(disciplin, time, LocalDate.now());
+        targetMember.addTrainingTime(newTime);
+
+        System.out.println("Tid tilføjet for disciplin: " + disciplin);
     }
+
 
     public void addCompetition() {
         Competition.createCompetition();
@@ -210,7 +237,7 @@ public class MenuUI {
 
 
 
-    public static void displayTop5Svimmers() {
+    public void displayTop5Svimmers() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Vælg svømmedisciplin:");
@@ -222,7 +249,7 @@ public class MenuUI {
             case 3 -> SvimmingDisciplin.BACKCRAWL;
             case 4 -> SvimmingDisciplin.BREASTSTROKE;
             default -> {
-                System.out.println("Ugyldigt valg. ");
+                System.out.println("Ugyldigt valg. Standard: Crawl");
                 yield SvimmingDisciplin.CRAWL;
             }
         };
@@ -233,31 +260,32 @@ public class MenuUI {
         for (Member m : Member.members) {
             if (m.getTrainingTimes() != null) {
                 for (TrainingTimes t : m.getTrainingTimes()) {
-                    alleTider.add(new TrainingRecord(m.getIdNumber(), t.getSvimTime(), t.getSvimmingDisciplin()));
+                    alleTider.add(new TrainingRecord(m.getIdNumber(), (int) t.getTimeInSeconds(), t.getDisciplin()));
                 }
             }
         }
 
-        // Filtrer og sorter tider KUN for den valgte disciplin
+        // Filtrer og sorter tider for den valgte disciplin
         List<TrainingRecord> filtreretTider = alleTider.stream()
                 .filter(r -> r.disciplin == valgtDisciplin)
-                .sorted(Comparator.comparingInt(r -> r.time))
+                .sorted(Comparator.comparingDouble(r -> r.time))  // 🔧 rettet her
                 .collect(Collectors.toList());
 
         // Udskriv top 5
         System.out.println("\n--- Top 5 svømmere i disciplinen: " + valgtDisciplin + " ---");
-        for (int i = 0; i < Math.min(5, filtreretTider.size()); i++) {
-            TrainingRecord r = filtreretTider.get(i);
-            System.out.println((i + 1) + ". ID: " + r.memberId + " - Tid: " + r.time + " sek.");
-        }
-
         if (filtreretTider.isEmpty()) {
             System.out.println("Ingen tider fundet for denne disciplin.");
+        } else {
+            for (int i = 0; i < Math.min(5, filtreretTider.size()); i++) {
+                TrainingRecord r = filtreretTider.get(i);
+                System.out.println((i + 1) + ". ID: " + r.memberId + " - Tid: " + r.time + " sek.");
+            }
         }
     }
 
+
     // Hjælpeklasse til at holde ID + tid + disciplin sammen
-    static class TrainingRecord {
+    public class TrainingRecord {
         int memberId;
         int time;
         SvimmingDisciplin disciplin;

@@ -1,80 +1,52 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.time.LocalDate;
 
 public class TrainingTimes {
-    SvimmingDisciplin svimmingDisciplin;
-    int svimTime;
+    private SvimmingDisciplin disciplin;
+    private double timeInSeconds;
+    private LocalDate date;
 
-    public TrainingTimes(SvimmingDisciplin svimmingDisciplin, int svimTime) {
-        this.svimmingDisciplin = svimmingDisciplin;
-        this.svimTime = svimTime;
+    public TrainingTimes(SvimmingDisciplin disciplin, double timeInSeconds, LocalDate date) {
+        this.disciplin = disciplin;
+        this.timeInSeconds = timeInSeconds;
+        this.date = date;
     }
 
+    public SvimmingDisciplin getDisciplin() {
+        return disciplin;
+    }
+
+    public double getTimeInSeconds() {
+        return timeInSeconds;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setDisciplin(SvimmingDisciplin disciplin) {
+        this.disciplin = disciplin;
+    }
+
+    public void setTimeInSeconds(double timeInSeconds) {
+        this.timeInSeconds = timeInSeconds;
+    }
+
+    // 🔧 Alias-metode til kompatibilitet med MenuUI
+    public double getSvimTime() {
+        return timeInSeconds;
+    }
+
+    // 🔧 Alias-metode til kompatibilitet med MenuUI
     public SvimmingDisciplin getSvimmingDisciplin() {
-        return svimmingDisciplin;
-    }
-
-    public int getSvimTime() {
-        return svimTime;
-    }
-
-    public void setSwimTime(int svimTime) {
-        this.svimTime = svimTime;
-    }
-
-    public void setSvimmingDisciplin(SvimmingDisciplin svimmingDisciplin) {
-        this.svimmingDisciplin = svimmingDisciplin;
+        return disciplin;
     }
 
     @Override
     public String toString() {
-        return svimmingDisciplin + " - " + svimTime + " sekunder";
-    }
-
-    // Statisk metode til at oprette et nyt træningsresultat
-    public static TrainingTimes addTrainingTime() {
-        {
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("Indtast medlems-ID: ");
-            int id = scanner.nextInt();
-            scanner.nextLine(); // rydder newline
-
-            Member foundMember = null;
-            for (Member m : Member.members) {
-                if (m.getIdNumber() == id) {
-                    foundMember = m;
-                    break;
-                }
-            }
-
-            if (foundMember == null) {
-                System.out.println("Ingen medlem med ID " + id + " blev fundet.");
-                return addTrainingTime();
-            }
-            SvimmingDisciplin disciplin = foundMember.getSvimmingDisciplin();
-            String fødselsdato = foundMember.getDateOfBirth();
-
-            System.out.println("Fundet medlem:");
-            System.out.println("Navn/ID: " + id);
-            System.out.println("Disciplin: " + disciplin);
-            System.out.println("Fødselsdato: " + fødselsdato);
-
-            // 3. Indtast tid
-            System.out.print("Indtast svømmetid i sekunder: ");
-            int swimTime = scanner.nextInt();
-
-            // 4. Opret og tilføj træningstid
-            TrainingTimes nyTid = new TrainingTimes(disciplin, swimTime);
-
-            if (foundMember.getTrainingTimes() == null) {
-                foundMember.setTrainingTimes(new ArrayList<>());
-            }
-
-            foundMember.getTrainingTimes().add(nyTid);
-
-            System.out.println("Tid tilføjet: " + disciplin + " - " + swimTime + " sekunder");
-
-            return nyTid;
-        }
+        return "Disciplin: " + disciplin + ", Tid: " + timeInSeconds + " sek, Dato: " + date;
     }
 }
